@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# based from example tkinter code in "Programming Python, 4ed" by Mark Lutz
-
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image
@@ -9,8 +7,8 @@ from PIL.ImageTk import PhotoImage
 from ScrolledCanvas import ScrolledCanvas
 
 imgdir = "/Users/tim/Google Drive/Spring 2019/csci5448/Project/github/CSCI5448-OOAD-IPA/test_images/"
-filename1 = '2008 Colder Bolder-55.jpg'
-filename2 = 'Evelyn Smash Burger.jpg'
+filename2 = '2008 Colder Bolder-55.jpg'
+filename1 = 'Evelyn Smash Burger.jpg'
 
 class IPA:
 	"""
@@ -26,9 +24,9 @@ class IPA:
 		self.nb = ttk.Notebook(self.mainFrame, padding=0) # height and width are for size of initial blank Notebook
 		self.nb.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE)
 
-		ttk.Button(self.mainFrame, text="Close").pack(side=tk.RIGHT)
-		ttk.Button(self.mainFrame, text="Save...").pack(side=tk.RIGHT)
-		ttk.Button(self.mainFrame, text='Open...', command=self.openButton).pack(side=tk.RIGHT)
+		ttk.Button(self.mainFrame, text="Close", command=self.onCloseButtonPress).pack(side=tk.RIGHT)
+		ttk.Button(self.mainFrame, text="Save...", command=self.onSaveButtonPress).pack(side=tk.RIGHT)
+		ttk.Button(self.mainFrame, text='Open...', command=self.onOpenButtonPress).pack(side=tk.RIGHT)
 
 		# To Do if time:  Can I improve the packing of the widgets so the buttons don't collapse away on size-down?
 
@@ -38,15 +36,23 @@ class IPA:
 		"""
 		self.mainFrame.mainloop()
 
-	def openButton(self):
-		print("Pressed Open...")
+	def onCloseButtonPress(self):
+		print("onCloseButtonPress()")
+		# To Do - offer to save all unsaved edits
+		self.mainFrame.quit()
+
+	def onSaveButtonPress(self):
+		print("onSaveButtonPress()")
+
+	def onOpenButtonPress(self):
+		print("onOpenButtonPress()")
 		self.openImage(imgdir, filename1)
 
 	def openImage(self, path, filename):
 		"""
 		Given a path name, open the image file and add a tab to display it.
 		"""
-		print("openImage({},{})".format(path,filename))
+
 		# Open the image file using PIL and save a reference to the image object (aggregation)
 		pilImage = Image.open(path + filename)
 		tkImage = PhotoImage(image=pilImage)
@@ -72,6 +78,5 @@ class IPA:
 
 
 
-if __name__ == '__main__':
-	ipa = IPA()
-	ipa.go()			# This call doesn't return until the application terminates
+ipa = IPA()
+ipa.go()			# This call doesn't return until the application terminates
