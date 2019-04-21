@@ -1,0 +1,438 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"if",
+				"ifmain\tif __name__ == '__main__'"
+			],
+			[
+				"calculate",
+				"calculate"
+			],
+			[
+				"Hello",
+				"HelloCallable"
+			],
+			[
+				"archi",
+				"archivedRentals"
+			],
+			[
+				"Ava",
+				"getAvailToolCount"
+			],
+			[
+				"get",
+				"getAvailToolCount"
+			],
+			[
+				"Ac",
+				"activeRentals"
+			],
+			[
+				"activ",
+				"activeRentalCount"
+			],
+			[
+				"Casu",
+				"CasualCustomer"
+			],
+			[
+				"common",
+				"commonLastNames"
+			],
+			[
+				"y",
+				"y"
+			],
+			[
+				"java",
+				"Java"
+			],
+			[
+				"my-",
+				"my-dialog"
+			],
+			[
+				"makeBa",
+				"makeBackgroundWhite"
+			],
+			[
+				"border",
+				"border-color\tproperty"
+			],
+			[
+				"bor",
+				"border-width\tproperty"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "#!/usr/bin/env python3\n\nfrom tkinter import *\n",
+			"settings":
+			{
+				"buffer_size": 46,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/Ant.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/User/Python3.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/Python3.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"tab",
+				"Print to HTML: print as HTML via browser"
+			],
+			[
+				"indentat",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"inden",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"indentation",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"git:stat",
+				"Git: Status"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/IPA"
+	],
+	"file_history":
+	[
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/IPA.sublime-project",
+		"/Users/tim/Google Drive/PP4E-Examples-1.4/Examples/PP4E/Gui/Tools/windows.py",
+		"/Users/tim/Google Drive/PP4E-Examples-1.4/Examples/PP4E/Gui/Tools/guimaker.py",
+		"/Users/tim/Google Drive/PP4E-Examples-1.4/Examples/PP4E/Gui/Tools/guimixin.py",
+		"/Users/tim/.bash_profile",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/entry2-modal.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/entry3.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demoRadio.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demo-radio-multi.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demo-radio-auto.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demoScale.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demoAll-win.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demoAll-prg-multi.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/quitter.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/dialogTable.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/demoDlg-print.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/setcolor.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/dlg-custom.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/message.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/entry1.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/entry2.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/dlg1.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/toplevel2.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/config-label.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/convert.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/gui6.py",
+		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter/gui6c.py",
+		"/Users/tima0476/.bash_profile",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/CSCI5448-OOAD-HW2.Q6/Shapes.java",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/CSCI5448-OOAD-HW2.Q6/readme.md",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/readme.md",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/run.bat",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/Triangle.java",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/Square.java",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/Circle.java",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/  symbol",
+		"/Users/tima0476/CU/spring2019/csci5448/HW/HW2/HW2_Q6/main.java",
+		"/Users/tima0476/CU/CSCI5502/final_project/final/turnin/source-tgz/readme.txt",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-cli/cast-scriber-show-transcript.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-output-lambda/cast-scriber-output-lambda.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-transcribe-lambda/cast-scriber-transcribe-lambda.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-output-lambda/deploy-cast-scriber-output-lambda.sh",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/testing-transcripts/MPU-Episode-449.json",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-transcribe-lambda/s3-lambda-notification-transcribe-configuration.json",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-output-lambda/s3-lambda-notification-output-configuration.json",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/.gitignore",
+		"/Users/tima0476/Downloads/test-m4a.json",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-web-lambda/deploy-cast-scriber-web-lambda.sh",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-transcribe-lambda/s3-lambda-notification-configuration.json",
+		"/Users/tima0476/Library/Application Support/Sublime Text 3/Packages/User/Python3.sublime-build",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-web-lambda/test.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-web-lambda/s3-lambda-notification-configuration.json",
+		"/Users/tima0476/CU/CSCI5253/tmason_credentials.csv",
+		"/Users/tima0476/.aws/config",
+		"/Users/tima0476/Downloads/Test Audio 2.mp4",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-audio-lambda/cast-scriber-audio-lambda.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/cast-scriber-transcripts/cast-scriber-transcripts.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/website/index.html",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/website/js.html",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/readme.md",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/lambda_https_trigger_testing/LambdaFunctionOverHttps.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/website/js/footer.js",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/lambda_https_trigger_testing/create-item.json",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/lambda_https_trigger_testing/echo.json",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/aws-serverless-workshops-master/WebApplication/1_StaticWebHosting/website/js/config.js",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/website/temp.html",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/lambda_https_trigger_testing/input.txt",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/aws-serverless-workshops-master/WebApplication/1_StaticWebHosting/website/index.html",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/upload-site-to-s3.sh",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/lambda_https_trigger_testing/upload.sh",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/configure-s3-website.sh",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/labmda_https_trigger_testing/LambdaFunctionOverHttps.py",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/website/favicon.ico",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/website/404.html",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/www.cast-scriber.com/policy.json",
+		"/Users/tima0476/CU/CSCI5253/rootkey.csv",
+		"/Users/tima0476/CU/CSCI5253/GitHub/final-project-project-final-mason/guzzoutas/MPU-Episode-449.json",
+		"/Users/tima0476/.bashrc"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 102.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 46,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								46,
+								46
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 39.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 203.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "IPA.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Google Drive/Spring 2019/csci5448/Project/Learning Tkinter.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 253.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
