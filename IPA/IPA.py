@@ -7,11 +7,11 @@ from tkinter import ttk
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
+from ScrolledCanvas import ScrolledCanvas
 
 imgdir = "/Users/tim/Google Drive/Spring 2019/csci5448/Project/github/CSCI5448-OOAD-IPA/test_images/"
+filename1 = '2008 Colder Bolder-55.jpg'
 filename2 = 'Evelyn Smash Burger.jpg'
-filename1 = '2008 Colder Bolder-55 smaller.jpg'
-
 
 class IPA:
 	"""
@@ -33,6 +33,9 @@ class IPA:
 		ttk.Button(self.mainFrame, text='Open...', command=self.openButton).pack(side=tk.RIGHT)
 
 	def go(self):
+		"""
+		Start the application running by firing off the tkInter event loop 
+		"""
 		self.mainFrame.mainloop()
 
 	def openButton(self):
@@ -54,10 +57,10 @@ class IPA:
 		frame = ttk.Frame(self.nb)
 		self.nb.add(frame, text=filename)
 
-		canvas = tk.Canvas(frame)
-		canvas.config(width=tkImage.width(), height=tkImage.height())	# To do - Add scrolling instead of forcing size
-		print("width", tkImage.width(), "height", tkImage.height() )
-		canvas.create_image(0, 0, image=tkImage, anchor=tk.NW)				 			# 0,0 is the relative coordinates of the image
+		canvas = ScrolledCanvas(frame)
+		canvas.config(width=min(1280,tkImage.width()), height=min(1024,tkImage.height()))	# size of the image region on screen
+		canvas.config(scrollregion=(0, 0, tkImage.width(), tkImage.height()))				# virtual size of the image
+		canvas.create_image(0, 0, image=tkImage, anchor=tk.NW)				 				# 0,0 is the relative coordinates of the image
 		canvas.pack(fill=tk.BOTH)
 
 
