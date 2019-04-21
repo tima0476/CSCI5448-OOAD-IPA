@@ -24,7 +24,6 @@ class IPA:
 
 		self.pilImages = []
 		self.tkImages = []
-		# self.imageTabs = []
 
 		self.nb = ttk.Notebook(self.mainFrame, padding=0)
 		self.nb.pack()
@@ -41,19 +40,19 @@ class IPA:
 		self.openImage(imgdir, filename1)
 
 	def openImage(self, path, filename):
+		"""
+		Given a path name, open the image file and add a tab to display it.
+		"""
 		print("openImage({},{})".format(path,filename))
 		# Open the image file using PIL and save a reference to the image object (aggregation)
 		pilImage = Image.open(path + filename)
 		tkImage = PhotoImage(image=pilImage)
 
-		# self.pilImages.append(pilImage)
 		self.tkImages.append(tkImage)	# must keep a reference so it doesn't get garbage collected.
 
 		# Add a tab to the main frame's notebook object, and display the image on that tab pane
 		frame = ttk.Frame(self.nb)
-		# self.imageTabs.append(frame)
 		self.nb.add(frame, text=filename)
-		# self.nb.pack()			# todo: necessary?
 
 		canvas = tk.Canvas(frame)
 		canvas.config(width=tkImage.width(), height=tkImage.height())	# To do - Add scrolling instead of forcing size
