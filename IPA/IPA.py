@@ -4,7 +4,6 @@
 
 import tkinter as tk
 from tkinter import ttk
-
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
 from ScrolledCanvas import ScrolledCanvas
@@ -22,15 +21,16 @@ class IPA:
 		self.mainFrame.pack()
 		self.mainFrame.master.title("IPA: Image Processing Application")
 
-		self.pilImages = []
-		self.tkImages = []
-
-		self.nb = ttk.Notebook(self.mainFrame, padding=0)
-		self.nb.pack()
+		self.tkImages = []		# for aggregation of tkInter image objects
+		
+		self.nb = ttk.Notebook(self.mainFrame, padding=0) # height and width are for size of initial blank Notebook
+		self.nb.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE)
 
 		ttk.Button(self.mainFrame, text="Close").pack(side=tk.RIGHT)
 		ttk.Button(self.mainFrame, text="Save...").pack(side=tk.RIGHT)
 		ttk.Button(self.mainFrame, text='Open...', command=self.openButton).pack(side=tk.RIGHT)
+
+		# To Do if time:  Can I improve the packing of the widgets so the buttons don't collapse away on size-down?
 
 	def go(self):
 		"""
@@ -58,9 +58,15 @@ class IPA:
 		self.nb.add(frame, text=filename)
 
 		canvas = ScrolledCanvas(frame)
-		canvas.config(width=min(1280,tkImage.width()), height=min(1024,tkImage.height()))	# size of the image region on screen
-		canvas.config(scrollregion=(0, 0, tkImage.width(), tkImage.height()))				# virtual size of the image
-		canvas.create_image(0, 0, image=tkImage, anchor=tk.NW)				 				# 0,0 is the relative coordinates of the image
+
+		# compute a maximum size based on the display size, leaving some buffer for other UI elements
+		screenW = self.mainFrame.winfo_screenwidth()-40
+		screenH = self.mainFrame.winfo_screenheight()-150
+
+		# create the canvas object on which the image will be displayed
+		canvas.config(width=min(screenW,tkImage.width()), height=min(screenH,tkImage.height()))	# size of the image region on screen
+		canvas.config(scrollregion=(0, 0, tkImage.width(), tkImage.height()))					# virtual size of the image
+		canvas.create_image(0, 0, image=tkImage, anchor=tk.NW)				 					# 0,0 is the relative coordinates of the image
 		canvas.pack(fill=tk.BOTH)
 
 
