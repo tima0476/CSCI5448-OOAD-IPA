@@ -72,11 +72,11 @@
 	"buffers":
 	[
 		{
-			"contents": "#!/usr/bin/env python3\n\nfrom tkinter import *\n",
+			"file": "IPA/IPA.py",
 			"settings":
 			{
-				"buffer_size": 46,
-				"line_ending": "Unix"
+				"buffer_size": 7395,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -196,7 +196,9 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/tim/Google Drive/Spring 2019/csci5448/Project/IPA"
+		"/C/Users/9438/Documents/GitHub/CSCI5448-OOAD-IPA",
+		"/C/Users/9438/Documents/GitHub/CSCI5448-OOAD-IPA/IPA",
+		"/C/Users/9438/Documents/GitHub/CSCI5448-OOAD-IPA/test_images"
 	],
 	"file_history":
 	[
@@ -317,23 +319,25 @@
 			[
 				{
 					"buffer": 0,
+					"file": "IPA/IPA.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 46,
+						"buffer_size": 7395,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								46,
-								46
+								207,
+								207
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -347,7 +351,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -388,7 +392,7 @@
 	"project": "IPA.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
