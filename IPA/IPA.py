@@ -53,6 +53,7 @@ class IPA:
 		#
 		rightFrame = ttk.Frame(self.mainFrame)
 		rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
+		ttk.Label(rightFrame, text='Actions').pack(side=tk.TOP, anchor=tk.N)
 			
 
 		#
