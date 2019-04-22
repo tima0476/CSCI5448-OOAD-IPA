@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
+import os
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
 from ScrolledCanvas import ScrolledCanvas
 
 imgdir = "/Users/tim/Google Drive/Spring 2019/csci5448/Project/github/CSCI5448-OOAD-IPA/test_images/"
-filename2 = '2008 Colder Bolder-55.jpg'
-filename1 = 'Evelyn Smash Burger.jpg'
 
 class IPA:
 	"""
@@ -37,29 +37,43 @@ class IPA:
 		self.mainFrame.mainloop()
 
 	def onCloseButtonPress(self):
+		"""
+		Button handler:  Called when the Close... button is pressed
+		"""
 		print("onCloseButtonPress()")
 		# To Do - offer to save all unsaved edits
 		self.mainFrame.quit()
 
 	def onSaveButtonPress(self):
+		"""
+		Button handler:  Called when the Save... button is pressed
+		"""
 		print("onSaveButtonPress()")
 
 	def onOpenButtonPress(self):
-		print("onOpenButtonPress()")
-		self.openImage(imgdir, filename1)
-
-	def openImage(self, path, filename):
 		"""
-		Given a path name, open the image file and add a tab to display it.
+		Button handler:  Called when the Open... button is pressed
+		"""
+		# Display a file chooser
+		filepath = filedialog.askopenfilename(initialdir = imgdir, title="Choose An Image to Open")
+		print("onOpenButtonPress() chose",filepath)
+
+		# Open the chosen file (if any)
+		if filepath:
+			self.openImage(filepath)
+
+	def openImage(self, filepath):
+		"""
+		Open an image file and add a tab to display it.
 		"""
 
 		# Open the image file using PIL and save a reference to the image object (aggregation)
-		pilImage = Image.open(path + filename)
-		tkImage = PhotoImage(image=pilImage)
+		tkImage = PhotoImage(image=Image.open(filepath))
 
-		self.tkImages.append(tkImage)	# must keep a reference so it doesn't get garbage collected.
+		self.tkImages.append(tkImage)	# must keep a persistent reference so the image doesn't get garbage collected.
 
 		# Add a tab to the main frame's notebook object, and display the image on that tab pane
+		(_,filename) = os.path.split(filepath)	# pull out the filename to use as the tab title
 		frame = ttk.Frame(self.nb)
 		self.nb.add(frame, text=filename)
 
@@ -74,8 +88,6 @@ class IPA:
 		canvas.config(scrollregion=(0, 0, tkImage.width(), tkImage.height()))					# virtual size of the image
 		canvas.create_image(0, 0, image=tkImage, anchor=tk.NW)				 					# 0,0 is the relative coordinates of the image
 		canvas.pack(fill=tk.BOTH)
-
-
 
 
 ipa = IPA()
