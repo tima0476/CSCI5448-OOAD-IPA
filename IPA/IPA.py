@@ -27,16 +27,33 @@ class IPA:
 		self.origSizes = []		# store (w,h) tuples with the original dimensions of each image
 		self.currZoom = []		# store the current zoom level for each image
 		
-		# Create some frames to help achieve the desired layout of widgets.
+		# Create the row of control buttons along the bottom of the window in order from right to left
+		bottomFrame = tk.Frame(self.mainFrame)
+		bottomFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.TRUE)
+		self.closeButton = tk.Button(bottomFrame, text="Close", command=self.onCloseButtonPress)
+		self.saveButton = tk.Button(bottomFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
+		self.openButton = tk.Button(bottomFrame, text='Open...', command=self.onOpenButtonPress)
+		# Buttons will be placed from right to left in the order they are packed.
+		self.closeButton.pack(side=tk.RIGHT)
+		self.saveButton.pack(side=tk.RIGHT)
+		self.openButton.pack(side=tk.RIGHT)
+
+		# Use the remaining space in the bottom frame for the zoom slider (tk calls a slider a "Scale")
+		self.zoomScale = ttk.Scale(bottomFrame, command=self.onZoomMove, from_=5, to=200, value=100, orient=tk.HORIZONTAL)
+		self.zoomScale.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.TRUE)
+		ttk.Label(bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
+
+		# Add a panel on the right for the 'extras'
+		rightFrame = tk.Frame(self.mainFrame)
+		rightFrame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.TRUE)
+
+		# for now, just test with a simple label.
+		ttk.Label(rightFrame, text='Side Panels Rock!').pack(side=tk.TOP)
+
+
+		# Use the remaining space on top & left for the notebook panel which shows the images
 		imgFrame = tk.Frame(self.mainFrame)
 		imgFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE)
-		subFrame = tk.Frame(imgFrame)
-		subFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.TRUE)
-
-		# Add a slider (tk calls these "Scale") for the zoom control
-		self.zoomScale = ttk.Scale(subFrame, command=self.onZoomMove, from_=5, to=200, value=100, orient=tk.HORIZONTAL)
-		self.zoomScale.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.TRUE)
-		ttk.Label(subFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
 
 		# add a ttk::Notebook widget.  This is a 'tabbed' panel where the images will be displayed...one image per 'tab'
 		self.nb = ttk.Notebook(imgFrame, padding=0)
@@ -48,16 +65,6 @@ class IPA:
 			#
 			# * Control-Tab: selects the tab following the currently selected one.
 			# * Shift-Control-Tab: selects the tab preceding the currently selected one.
-
-		# Create the row of control buttons along the bottom of the window in order from right to left
-		self.closeButton = tk.Button(self.mainFrame, text="Close", command=self.onCloseButtonPress)
-		self.saveButton = tk.Button(self.mainFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
-		self.openButton = tk.Button(self.mainFrame, text='Open...', command=self.onOpenButtonPress)
-
-		# place the buttons
-		self.closeButton.pack(side=tk.RIGHT)
-		self.saveButton.pack(side=tk.RIGHT)
-		self.openButton.pack(side=tk.RIGHT)
 
 		# To Do if time:  Can I improve the packing of the widgets so the buttons don't collapse away on vertical size-down?
 
