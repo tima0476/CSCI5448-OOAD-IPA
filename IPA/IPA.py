@@ -15,7 +15,7 @@ class IPA:
 	This is the main program class of IPA: Image Processing Application. 
 	"""
 	def __init__(self):
-		self.mainFrame = ttk.Frame(parent=None)
+		self.mainFrame = tk.Frame(parent=None)
 		self.mainFrame.pack()
 		self.mainFrame.master.title("IPA: Image Processing Application")
 
@@ -24,11 +24,15 @@ class IPA:
 		self.nb = ttk.Notebook(self.mainFrame, padding=0) # height and width are for size of initial blank Notebook
 		self.nb.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE)
 
-		ttk.Button(self.mainFrame, text="Close", command=self.onCloseButtonPress).pack(side=tk.RIGHT)
-		ttk.Button(self.mainFrame, text="Save...", command=self.onSaveButtonPress).pack(side=tk.RIGHT)
-		ttk.Button(self.mainFrame, text='Open...', command=self.onOpenButtonPress).pack(side=tk.RIGHT)
+		self.closeButton = tk.Button(self.mainFrame, text="Close", command=self.onCloseButtonPress)
+		self.saveButton = tk.Button(self.mainFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
+		self.openButton = tk.Button(self.mainFrame, text='Open...', command=self.onOpenButtonPress)
 
-		# To Do if time:  Can I improve the packing of the widgets so the buttons don't collapse away on size-down?
+		self.closeButton.pack(side=tk.RIGHT)
+		self.saveButton.pack(side=tk.RIGHT)
+		self.openButton.pack(side=tk.RIGHT)
+
+		# To Do if time:  Can I improve the packing of the widgets so the buttons don't collapse away on vertical size-down?
 
 	def go(self):
 		"""
@@ -38,7 +42,7 @@ class IPA:
 
 	def onCloseButtonPress(self):
 		"""
-		Button handler:  Called when the Close... button is pressed
+		Button handler:  Called when the Close button is pressed
 		"""
 		print("onCloseButtonPress()")
 		# To Do - offer to save all unsaved edits
@@ -74,7 +78,7 @@ class IPA:
 
 		# Add a tab to the main frame's notebook object, and display the image on that tab pane
 		(_,filename) = os.path.split(filepath)	# pull out the filename to use as the tab title
-		frame = ttk.Frame(self.nb)
+		frame = tk.Frame(self.nb)
 		self.nb.add(frame, text=filename)
 
 		canvas = ScrolledCanvas(frame)
@@ -88,6 +92,9 @@ class IPA:
 		canvas.config(scrollregion=(0, 0, tkImage.width(), tkImage.height()))					# virtual size of the image
 		canvas.create_image(0, 0, image=tkImage, anchor=tk.NW)				 					# 0,0 is the relative coordinates of the image
 		canvas.pack(fill=tk.BOTH)
+
+		# Now we have at least one image open.  Enable the Save... button
+		self.saveButton['state'] = 'normal'
 
 
 ipa = IPA()
