@@ -30,7 +30,9 @@ class IPA:
 		self.mainFrame.pack()
 		self.mainFrame.master.title("IPA: Image Processing Application")
 		
+		#
 		# Create the row of control buttons along the bottom of the window in order from right to left
+		#
 		bottomFrame = ttk.Frame(self.mainFrame)
 		bottomFrame.pack(side=tk.BOTTOM, fill='x', expand='true', anchor='s')
 		self.closeButton = ttk.Button(bottomFrame, text="Close", command=self.onCloseButtonPress)
@@ -46,15 +48,16 @@ class IPA:
 		self.zoomScale.pack(side=tk.RIGHT, fill='x', expand='true')
 		ttk.Label(bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
 
+		#
 		# Add a panel on the right for the 'extras'
+		#
 		rightFrame = ttk.Frame(self.mainFrame)
 		rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
+			
 
-		# for now, just test with a simple label.
-		ttk.Label(rightFrame, text='Side Panels Rock!').pack(side=tk.TOP)
-
-
+		#
 		# Use the remaining space on top & left for the notebook panel which shows the images
+		#
 		imgFrame = ttk.Frame(self.mainFrame)
 		imgFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE, anchor='nw')
 
