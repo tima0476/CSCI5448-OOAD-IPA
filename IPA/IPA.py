@@ -15,24 +15,27 @@ class IPA:
 	This is the main program class of IPA: Image Processing Application. 
 	"""
 	def __init__(self):
-		self.mainFrame = tk.Frame(parent=None)
-		self.mainFrame.pack()
-		self.mainFrame.master.title("IPA: Image Processing Application")
-
-		# Initialize persistent storage lists for images.  To Do - Code Smell...Make an object storing all info about an object (MVC?)
+		# Initialize persistent storage lists for images.  To Do - Code Smell...Make
+		# an object storing all info about an object (MVC?)
 		self.pilImages = []		# store PIL image objects
 		self.tkImages = []		# store original tkInter PhotoImage objects
 		self.modTkImages = []	# store interim PhotoImage objects
 		self.imgCanvases = []	# store tkInter canvas objects (to enable changing the displayed image)
 		self.origSizes = []		# store (w,h) tuples with the original dimensions of each image
 		self.currZoom = []		# store the current zoom level for each image
+
+		# To Do:  Move all of the UI creation / layout to a separate functions. 
+		# Just layout the panels here, then "fill them in" with sub functions
+		self.mainFrame = ttk.Frame(parent=None)
+		self.mainFrame.pack()
+		self.mainFrame.master.title("IPA: Image Processing Application")
 		
 		# Create the row of control buttons along the bottom of the window in order from right to left
-		bottomFrame = tk.Frame(self.mainFrame)
-		bottomFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.TRUE)
-		self.closeButton = tk.Button(bottomFrame, text="Close", command=self.onCloseButtonPress)
-		self.saveButton = tk.Button(bottomFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
-		self.openButton = tk.Button(bottomFrame, text='Open...', command=self.onOpenButtonPress)
+		bottomFrame = ttk.Frame(self.mainFrame)
+		bottomFrame.pack(side=tk.BOTTOM, fill='x', expand='true', anchor='s')
+		self.closeButton = ttk.Button(bottomFrame, text="Close", command=self.onCloseButtonPress)
+		self.saveButton = ttk.Button(bottomFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
+		self.openButton = ttk.Button(bottomFrame, text='Open...', command=self.onOpenButtonPress)
 		# Buttons will be placed from right to left in the order they are packed.
 		self.closeButton.pack(side=tk.RIGHT)
 		self.saveButton.pack(side=tk.RIGHT)
@@ -40,20 +43,20 @@ class IPA:
 
 		# Use the remaining space in the bottom frame for the zoom slider (tk calls a slider a "Scale")
 		self.zoomScale = ttk.Scale(bottomFrame, command=self.onZoomMove, from_=5, to=200, value=100, orient=tk.HORIZONTAL)
-		self.zoomScale.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.TRUE)
+		self.zoomScale.pack(side=tk.RIGHT, fill='x', expand='true')
 		ttk.Label(bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
 
 		# Add a panel on the right for the 'extras'
-		rightFrame = tk.Frame(self.mainFrame)
-		rightFrame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.TRUE)
+		rightFrame = ttk.Frame(self.mainFrame)
+		rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
 
 		# for now, just test with a simple label.
 		ttk.Label(rightFrame, text='Side Panels Rock!').pack(side=tk.TOP)
 
 
 		# Use the remaining space on top & left for the notebook panel which shows the images
-		imgFrame = tk.Frame(self.mainFrame)
-		imgFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE)
+		imgFrame = ttk.Frame(self.mainFrame)
+		imgFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE, anchor='nw')
 
 		# add a ttk::Notebook widget.  This is a 'tabbed' panel where the images will be displayed...one image per 'tab'
 		self.nb = ttk.Notebook(imgFrame, padding=0)
@@ -65,8 +68,6 @@ class IPA:
 			#
 			# * Control-Tab: selects the tab following the currently selected one.
 			# * Shift-Control-Tab: selects the tab preceding the currently selected one.
-
-		# To Do if time:  Can I improve the packing of the widgets so the buttons don't collapse away on vertical size-down?
 
 	def go(self):
 		"""
