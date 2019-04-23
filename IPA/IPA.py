@@ -54,6 +54,51 @@ class IPA:
 		rightFrame = ttk.Frame(self.mainFrame)
 		rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
 		ttk.Label(rightFrame, text='Actions').pack(side=tk.TOP, anchor=tk.N)
+
+		# Add 4 sliders to the action panel - Brightness, Contrast, Saturation, Tint
+		rightScaleLabelsFrame = ttk.Frame(rightFrame)
+		rightScaleLabelsFrame.pack(side=tk.TOP)
+		
+		# Detour to add the sliders so we can query their width then come back and
+		# right-size the label images
+		rightScaleFrame = ttk.Frame(rightFrame)
+		rightScaleFrame.pack(side=tk.TOP)
+		self.tintScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
+		self.saturationScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
+		self.contrastScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
+		self.brightnessScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
+		self.tintScale.pack(side=tk.RIGHT)
+		self.saturationScale.pack(side=tk.RIGHT)
+		self.contrastScale.pack(side=tk.RIGHT)
+		self.brightnessScale.pack(side=tk.RIGHT)
+
+		self.tintScale.update()
+		sliderWidth = self.tintScale.winfo_width()	# safe to assume all sliders have equal width
+		print("Slider width",sliderWidth)
+
+		# Hack alert!  Tkinter doesn't support rotated text in labels, so load
+		# images of the rotated text and scale to fit the sliders
+		tempImg = Image.open('rotTint.png')
+		scale = float(sliderWidth)/float(tempImg.width)
+		self.imgTintLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
+
+		tempImg = Image.open('rotSaturation.png')
+		scale = float(sliderWidth)/float(tempImg.width)
+		self.imgSaturationLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
+
+		tempImg = Image.open('rotContrast.png')
+		scale = float(sliderWidth)/float(tempImg.width)
+		self.imgContrastLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
+
+		tempImg = Image.open('rotBrightness.png')
+		scale = float(sliderWidth)/float(tempImg.width)
+		self.imgBrightnessLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
+		
+		ttk.Label(rightScaleLabelsFrame, image=self.imgTintLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, image=self.imgSaturationLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, image=self.imgContrastLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, image=self.imgBrightnessLabel).pack(side=tk.RIGHT)
+
 			
 
 		#
@@ -72,6 +117,9 @@ class IPA:
 			#
 			# * Control-Tab: selects the tab following the currently selected one.
 			# * Shift-Control-Tab: selects the tab preceding the currently selected one.
+
+	def dummy(self, value):
+		print("dumdum")
 
 	def go(self):
 		"""
