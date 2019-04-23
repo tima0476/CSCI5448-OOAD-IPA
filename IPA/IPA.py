@@ -53,7 +53,6 @@ class IPA:
 		#
 		rightFrame = ttk.Frame(self.mainFrame)
 		rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
-		ttk.Label(rightFrame, text='Actions').pack(side=tk.TOP, anchor=tk.N)
 
 		# Add 4 sliders to the action panel - Brightness, Contrast, Saturation, Tint
 		rightScaleLabelsFrame = ttk.Frame(rightFrame)
@@ -94,10 +93,10 @@ class IPA:
 		scale = float(sliderWidth)/float(tempImg.width)
 		self.imgBrightnessLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
 		
-		ttk.Label(rightScaleLabelsFrame, image=self.imgTintLabel).pack(side=tk.RIGHT)
-		ttk.Label(rightScaleLabelsFrame, image=self.imgSaturationLabel).pack(side=tk.RIGHT)
-		ttk.Label(rightScaleLabelsFrame, image=self.imgContrastLabel).pack(side=tk.RIGHT)
-		ttk.Label(rightScaleLabelsFrame, image=self.imgBrightnessLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgTintLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgSaturationLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgContrastLabel).pack(side=tk.RIGHT)
+		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgBrightnessLabel).pack(side=tk.RIGHT)
 
 			
 
