@@ -3,32 +3,24 @@ from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
-from ScrolledCanvas import ScrolledCanvas
-from IPAController import IPAController
+import ScrolledCanvas
+import ImageVitals
+import IPAController
 
 class IPAView:
 
-	def __init__(self, controller):
-		self.model = []
+	def __init__(self, controller, model):
+		print("IPAView instantiated")		# DEBUG code to delete
+		self.model = model
 		self.controller = controller
-		self.LaunchUI()
 
-	def LaunchUI(self):
-		# Initialize persistent storage lists for images.  To Do - Code Smell...Make
-		# an object storing all info about an image (MVC?)
-		# self.pilImages = []		# store PIL image objects
-		# self.tkImages = []		# store original tkInter PhotoImage objects
-		# self.modTkImages = []	# store interim PhotoImage objects
-		# self.imgCanvases = []	# store tkInter canvas objects (to enable changing the displayed image)
-		# self.origSizes = []		# store (w,h) tuples with the original dimensions of each image
-		# self.currZoom = []		# store the current zoom level for each image
-
+	def CreateUI(self):
 		self.mainFrame = ttk.Frame(parent=None)
 		self.mainFrame.pack()
 		self.mainFrame.master.title("IPA: Image Processing Application")
 		
 		#
-		# Create the row of control buttons along the bottom of the window in order from right to left
+		# Create the row of control buttons along the bottom of the window
 		#
 		bottomFrame = ttk.Frame(self.mainFrame)
 		bottomFrame.pack(side=tk.BOTTOM, fill='x', expand='true', anchor='s')
@@ -69,9 +61,8 @@ class IPAView:
 		self.contrastScale.pack(side=tk.RIGHT)
 		self.brightnessScale.pack(side=tk.RIGHT)
 
-		self.tintScale.update()						# if update not called, then the returned width will be 1
-		sliderWidth = self.tintScale.winfo_width()	# safe to assume all sliders have equal width
-		print("Slider width",sliderWidth)
+		self.tintScale.update()						# Necessary to call update prior to querying the width (thanks, StackOverflow!)
+		sliderWidth = self.tintScale.winfo_width()	# safe to assume all sliders have equal width.
 
 		# Hack alert!  Tkinter doesn't support rotated text in labels, so load
 		# images of the rotated text and scale to fit the sliders
@@ -132,7 +123,8 @@ class IPAView:
 		Button handler:  Called when the Open... button is pressed
 		"""
 		# Display a file chooser
-		filepath = filedialog.askopenfilename(initialdir = imgdir, title="Choose An Image to Open")
+		filepath = filedialog.askopenfilename(title="Choose An Image to Open")
+		# filepath = filedialog.askopenfilename(initialdir = imgdir, title="Choose An Image to Open")
 
 		# Open the chosen file (if any)
 		# if filepath:
@@ -154,10 +146,25 @@ class IPAView:
 		# # scale the image
 		# self.zoomImage(value)
 
+	# def zoomImage(self, value):
+	# 	# Get the active tab #.  Abort if no tabs
+	# 	try:
+	# 		tabIdx = self.getCurrentTabID()
+	# 	except:
+	# 		return
+
+	# 	newSize = ( int(self.origSizes[tabIdx][0]*float(value)/100.0), int(self.origSizes[tabIdx][1]*float(value)/100.0) )
+
+	# 	newImg = self.pilImages[tabIdx].resize(size=newSize, resample=Image.LANCZOS)
+	# 	newTkImg = PhotoImage(image=newImg)
+	# 	self.modTkImages[tabIdx] = newTkImg
+
+	# 	self.updateCanvasImage(self.imgCanvases[tabIdx], newTkImg)
+
 	def dummy(self):
 		return
 
-	def go(self):
+	def start(self):
 		self.mainFrame.mainloop()
 
 	def onTabChanged(self, event):

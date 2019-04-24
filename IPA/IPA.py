@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
 
 import os
-from IPAController import IPAController
-from IPAView import IPAView
+import IPAController
+import IPAModel
+import IPAView
 
 
-imgdir = "/Users/tim/Google Drive/Spring 2019/csci5448/Project/github/CSCI5448-OOAD-IPA/test_images/"
+# imgdir = "/Users/tim/Google Drive/Spring 2019/csci5448/Project/github/CSCI5448-OOAD-IPA/test_images/"
 
 class IPA:
 	"""
 	This is the main program class of IPA: Image Processing Application. 
 	"""
 	def __init__(self):
-		self.controller = IPAController()
-		self.view = IPAView(self.controller)
+		print("IPA Instantiated")		# DEBUG code to delete
+		self.model = IPAModel.IPAModel()
+		self.controller = IPAController.IPAController(self.model)
 
-	def go(self):
-		self.view.go()
+
+	def start(self):
+		self.controller.start()
 		
 	# def onCloseButtonPress(self):
 	# 	"""
@@ -148,4 +151,4 @@ class IPA:
 	# 	return self.nb.index( self.nb.select() )
 
 ipa = IPA()
-ipa.go()			# This call doesn't return until the application terminates
+ipa.start()			# This call doesn't return until the application terminates
