@@ -8,5 +8,8 @@ class ImageVitals:
 		self.modTkImage = None
 		self.imgCanvas = None
 		self.origSize = (None,None)
-		self.currZoom = None
+		self.currZoom = 1.0
+		self.currSaturation = 1.0
+		self.currContrast = 1.0
+		self.currBrightness = 1.0
 		self.title = ""

@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
+import PIL.ImageEnhance as pie
 import ScrolledCanvas
 import ImageVitals
 import IPAController
@@ -40,7 +41,7 @@ class IPAView:
 		self.openButton.pack(side=tk.RIGHT)
 
 		# Use the remaining space in the bottom frame for the zoom slider (tk calls a slider a "Scale")
-		self.zoomScale = ttk.Scale(self.bottomFrame, command=self.onZoomMove, from_=5, to=200, value=100, orient=tk.HORIZONTAL)
+		self.zoomScale = ttk.Scale(self.bottomFrame, command=self.onZoomMove, from_=0.01, to=5.00, value=1.00, orient=tk.HORIZONTAL)
 		self.zoomScale.pack(side=tk.RIGHT, fill='x', expand='true')
 		ttk.Label(self.bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
 
@@ -58,23 +59,21 @@ class IPAView:
 		# right-size the label images
 		rightScaleFrame = ttk.Frame(self.rightFrame)
 		rightScaleFrame.pack(side=tk.TOP)
-		self.tintScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
-		self.saturationScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
-		self.contrastScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
-		self.brightnessScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
-		self.tintScale.pack(side=tk.RIGHT)
+		self.saturationScale = ttk.Scale(rightScaleFrame, command=self.onSaturationMove, from_=0.0, to=10.0, value=1.00, orient=tk.VERTICAL)
+		self.contrastScale   = ttk.Scale(rightScaleFrame, command=self.onContrastMove,   from_=0.0, to=10.0, value=1.00, orient=tk.VERTICAL)
+		self.brightnessScale = ttk.Scale(rightScaleFrame, command=self.onBrightnessMove, from_=0.0, to=10.0, value=1.00, orient=tk.VERTICAL)
 		self.saturationScale.pack(side=tk.RIGHT)
 		self.contrastScale.pack(side=tk.RIGHT)
 		self.brightnessScale.pack(side=tk.RIGHT)
 
-		self.tintScale.update()						# Necessary to call update prior to querying the width (thanks, StackOverflow!)
-		sliderWidth = self.tintScale.winfo_width()	# safe to assume all sliders have equal width.
+		self.saturationScale.update()						# Necessary to call update prior to querying the width (thanks, StackOverflow!)
+		sliderWidth = self.saturationScale.winfo_width()	# safe to assume all sliders have equal width.
 
 		# Hack alert!  Tkinter doesn't support rotated text in labels, so load
 		# images of the rotated text and scale to fit the sliders
-		tempImg = Image.open('rotTint.png')
-		scale = float(sliderWidth)/float(tempImg.width)
-		self.imgTintLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
+		# tempImg = Image.open('rotTint.png')
+		# scale = float(sliderWidth)/float(tempImg.width)
+		# self.imgTintLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
 
 		tempImg = Image.open('rotSaturation.png')
 		scale = float(sliderWidth)/float(tempImg.width)
@@ -88,7 +87,7 @@ class IPAView:
 		scale = float(sliderWidth)/float(tempImg.width)
 		self.imgBrightnessLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
 		
-		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgTintLabel).pack(side=tk.RIGHT)
+		# ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgTintLabel).pack(side=tk.RIGHT)
 		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgSaturationLabel).pack(side=tk.RIGHT)
 		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgContrastLabel).pack(side=tk.RIGHT)
 		ttk.Label(rightScaleLabelsFrame, justify=tk.LEFT, image=self.imgBrightnessLabel).pack(side=tk.RIGHT)
@@ -192,21 +191,31 @@ class IPAView:
 		"""
 
 		# Tell the controller to change the zoom of the active image
-		self.controller.zoomImage(float(value) / 100.0)
+		self.controller.zoomImage(float(value))
 
-	def zoomImage(self, imgInfo):
-		# # Get the active tab #.  Abort if no tabs
-		# try:
-		# 	tabIdx = self.getCurrentTabID()
-		# except:
-		# 	return
+	def onBrightnessMove(self, value):
+		"""
+		Event handler - the Brightness slider has moved. Adjust the image on the current tab accordingly.
+		"""
 
-		newSize = ( int(imgInfo.origSize[0]*imgInfo.currZoom), int(imgInfo.origSize[1]*imgInfo.currZoom) )
+		# Tell the controller to change the brightness of the active image
+		self.controller.adjustBrightness(float(value))
 
-		imgInfo.modTkImage = PhotoImage(image=imgInfo.origImage.resize(size=newSize, resample=Image.LANCZOS))
-		
-		self.updateCanvasImage(imgInfo)
-		
+	def onContrastMove(self, value):
+		"""
+		Event handler - the Contrast slider has moved. Adjust the image on the current tab accordingly.
+		"""
+
+		# Tell the controller to change the contrast of the active image
+		self.controller.adjustContrast(float(value))
+
+	def onSaturationMove(self, value):
+		"""
+		Event handler - the Zoom slider has moved. Adjust the image on the current tab accordingly.
+		"""
+
+		# Tell the controller to change the saturation of the active image
+		self.controller.adjustSaturation(float(value))
 
 	def onTabChanged(self, event):
 		"""
@@ -224,10 +233,36 @@ class IPAView:
 		"""
 		Update the positions of all the sliders to match the currently active image
 		"""
-		self.zoomScale.set(imgInfo.currZoom * 100)
+		self.zoomScale.set(imgInfo.currZoom)
+		self.saturationScale.set(imgInfo.currSaturation)
+		self.contrastScale.set(imgInfo.currContrast)
+		self.brightnessScale.set(imgInfo.currBrightness)
 
-	def dummy(self):
+	def adjustImage(self, imgInfo):
+		"""
+		Apply the current adjustement values to all 4 adjustments (zoom, saturation, contrast, brightness)
+		"""
+
+		# Zoom
+		newSize = ( int(imgInfo.origSize[0]*imgInfo.currZoom), int(imgInfo.origSize[1]*imgInfo.currZoom) )
+		tmp = imgInfo.origImage.resize(size=newSize, resample=Image.LANCZOS)
+
+		# Saturation
+		enhancer = pie.Color(tmp)
+		tmp = enhancer.enhance(imgInfo.currSaturation)
+
+		# Contrast
+		enhancer = pie.Contrast(tmp)
+		tmp = enhancer.enhance(imgInfo.currContrast)
+
+		# Brightness
+		enhancer = pie.Brightness(tmp)
+		imgInfo.modTkImage = PhotoImage(image=enhancer.enhance(imgInfo.currBrightness))
+		
+		# display the result
+		self.updateCanvasImage(imgInfo)
 		return
+
 
 	def start(self):
 		self.mainFrame.mainloop()

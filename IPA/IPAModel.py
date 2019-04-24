@@ -23,6 +23,14 @@ class IPAModel:
 	def getActiveImageInfo(self):
 		return self.images[self.getActiveImageIdx()]
 
-	def zoomActiveImage(self, factor):
-		self.images[self.getActiveImageIdx()].currZoom = factor
-		return
+	def zoomActiveImage(self, value):
+		self.getActiveImageInfo().currZoom = value
+
+	def adjustActiveSaturation(self, value):
+		self.getActiveImageInfo().currSaturation = value
+
+	def adjustActiveContrast(self, value):
+		self.getActiveImageInfo().currContrast = value
+
+	def adjustActiveBrightness(self, value):
+		self.getActiveImageInfo().currBrightness = value
