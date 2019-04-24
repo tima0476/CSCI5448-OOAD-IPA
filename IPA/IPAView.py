@@ -10,7 +10,6 @@ import IPAController
 class IPAView:
 
 	def __init__(self, controller, model):
-		print("IPAView instantiated")		# DEBUG code to delete
 		self.model = model
 		self.controller = controller
 
@@ -22,11 +21,11 @@ class IPAView:
 		#
 		# Create the row of control buttons along the bottom of the window
 		#
-		bottomFrame = ttk.Frame(self.mainFrame)
-		bottomFrame.pack(side=tk.BOTTOM, fill='x', expand='true', anchor='s')
-		self.closeButton = ttk.Button(bottomFrame, text="Close", command=self.onCloseButtonPress)
-		self.saveButton = ttk.Button(bottomFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
-		self.openButton = ttk.Button(bottomFrame, text='Open...', command=self.onOpenButtonPress)
+		self.bottomFrame = ttk.Frame(self.mainFrame)
+		self.bottomFrame.pack(side=tk.BOTTOM, fill='x', expand='true', anchor='s')
+		self.closeButton = ttk.Button(self.bottomFrame, text="Close", command=self.onCloseButtonPress)
+		self.saveButton = ttk.Button(self.bottomFrame, text="Save...", command=self.onSaveButtonPress, state='disabled')
+		self.openButton = ttk.Button(self.bottomFrame, text='Open...', command=self.onOpenButtonPress)
 
 		# Buttons will be placed from right to left in the order they are packed.
 		self.closeButton.pack(side=tk.RIGHT)
@@ -34,23 +33,23 @@ class IPAView:
 		self.openButton.pack(side=tk.RIGHT)
 
 		# Use the remaining space in the bottom frame for the zoom slider (tk calls a slider a "Scale")
-		self.zoomScale = ttk.Scale(bottomFrame, command=self.onZoomMove, from_=5, to=200, value=100, orient=tk.HORIZONTAL)
+		self.zoomScale = ttk.Scale(self.bottomFrame, command=self.onZoomMove, from_=5, to=200, value=100, orient=tk.HORIZONTAL)
 		self.zoomScale.pack(side=tk.RIGHT, fill='x', expand='true')
-		ttk.Label(bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
+		ttk.Label(self.bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
 
 		#
 		# Add a panel on the right for the 'extras'
 		#
-		rightFrame = ttk.Frame(self.mainFrame)
-		rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
+		self.rightFrame = ttk.Frame(self.mainFrame)
+		self.rightFrame.pack(side=tk.RIGHT, fill='y', expand=tk.TRUE, anchor=tk.E)
 
 		# Add 4 sliders to the action panel - Brightness, Contrast, Saturation, Tint
-		rightScaleLabelsFrame = ttk.Frame(rightFrame)
+		rightScaleLabelsFrame = ttk.Frame(self.rightFrame)
 		rightScaleLabelsFrame.pack(side=tk.TOP)
 		
 		# Detour to add the sliders so we can query their width then come back and
 		# right-size the label images
-		rightScaleFrame = ttk.Frame(rightFrame)
+		rightScaleFrame = ttk.Frame(self.rightFrame)
 		rightScaleFrame.pack(side=tk.TOP)
 		self.tintScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
 		self.saturationScale = ttk.Scale(rightScaleFrame, command=self.dummy, from_=0, to=100, orient=tk.VERTICAL)
@@ -124,11 +123,58 @@ class IPAView:
 		"""
 		# Display a file chooser
 		filepath = filedialog.askopenfilename(title="Choose An Image to Open")
-		# filepath = filedialog.askopenfilename(initialdir = imgdir, title="Choose An Image to Open")
 
 		# Open the chosen file (if any)
-		# if filepath:
-		# 	self.openImage(filepath)
+		if filepath:
+			self.controller.openImage(filepath)
+
+	def loadImage(self, filepath):
+		pilImage = Image.open(filepath)
+		tkImage = PhotoImage(image=pilImage)
+		return (pilImage, tkImage)
+		
+	def addImageTab(self, imgInfo):
+		"""
+		Add a tab to the notebook widget and display the passed-in image on it.
+		"""
+		frame = ttk.Frame(self.nb)
+		self.nb.add(frame, text=imgInfo.title, sticky='nesw')
+		imgInfo.imgCanvas = ScrolledCanvas.ScrolledCanvas(frame)
+		self.updateCanvasImage(imgInfo)
+
+		# Now we have at least one image open.  Enable the Save... button
+		self.saveButton['state'] = 'normal'
+
+		# Make the new tab active
+		endIdx = self.nb.index("end") - 1
+		self.nb.select(endIdx)
+
+		return endIdx
+
+	def updateCanvasImage(self, imgInfo):
+		"""
+		Given an existing tkInter canvas object and a PIL.PhotoImage, replace the image in the canvas
+		"""
+
+		# compute a maximum size based on the display size, accounting for other UI elements
+		screenW = self.mainFrame.winfo_screenwidth()-self.rightFrame.winfo_width()-10
+		screenH = self.mainFrame.winfo_screenheight()-self.bottomFrame.winfo_height()-10
+
+		width = imgInfo.modTkImage.width()
+		height = imgInfo.modTkImage.height()
+
+		# create the canvas object on which the image will be displayed
+		imgInfo.imgCanvas.config(width=min(screenW, width), height=min(screenH, height))	# size of the image region on screen
+		imgInfo.imgCanvas.config(scrollregion=(0, 0, width, height))						# virtual size of the image
+		imgInfo.imgCanvas.create_image(0, 0, image=imgInfo.modTkImage, anchor=tk.NW)		# 0,0 is the relative coordinates of the image
+		imgInfo.imgCanvas.pack(fill=tk.BOTH)
+
+		# To Do:  Restructure this according to
+		# https://stackoverflow.com/questions/19838972/how-to-update-an-image-on-a-canvas
+		# (only call create_image on the first round, and itemconfig on subsequent
+		# updates.  Need to persist the object returned from the first
+		# create_image() call)
+
 
 	def onZoomMove(self, value):
 		"""
@@ -161,6 +207,38 @@ class IPAView:
 
 	# 	self.updateCanvasImage(self.imgCanvases[tabIdx], newTkImg)
 
+	# def onZoomMove(self, value):
+	# 	"""
+	# 	Event handler - the Zoom slider has moved. Scale the image on the current tab accordingly.
+	# 	"""
+	# 	# Get the active tab #.  Abort if no tabs
+	# 	try:
+	# 		tabIdx = self.getCurrentTabID()
+	# 	except:
+	# 		return
+
+	# 	# remember the new zoom for this image
+	# 	self.currZoom[tabIdx] = int(round(float(value)))
+
+	# 	# scale the image
+	# 	self.zoomImage(value)
+		
+
+	# def onTabChanged(self, event):
+	# 	"""
+	# 	Event handler - called whenever the main Notebook's active tab selection changes.
+	# 	"""
+	# 	tabIdx = self.getCurrentTabID()
+
+	# 	# Update the zoom slider to the current zoom for this tab
+	# 	self.zoomScale.set(self.currZoom[tabIdx])
+
+	# def getCurrentTabID(self):
+	# 	"""
+	# 	Return the zero-based index of the currently selected tab in the main Notebook widget
+	# 	"""
+	# 	return self.nb.index( self.nb.select() )
+	
 	def dummy(self):
 		return
 

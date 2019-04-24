@@ -7,7 +7,6 @@ class ScrolledCanvas(tk.Canvas):
     adapted from "Learning Python, 4th ed." by Mark Lutz
     """
     def __init__(self, container):
-        print("ScrolledCanvas instantiated")        # DEBUG code to delete
         tk.Canvas.__init__(self, container)
         self.config(borderwidth=0)
         vScroll = tk.Scrollbar(container)
