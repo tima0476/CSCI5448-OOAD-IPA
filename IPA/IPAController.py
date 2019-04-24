@@ -35,6 +35,8 @@ class IPAController:
 		idx = self.view.addImageTab(imgInfo)
 		self.model.setActiveImage(idx)
 
+		self.view.updateControls(imgInfo)	# Update all of the slider controls for the newly active image
+
 	def zoomImage(self, scale):
 		"""
 		Change the zoom magnification of the current image.
@@ -44,3 +46,11 @@ class IPAController:
 
 		self.model.zoomActiveImage(scale)
 		self.view.zoomImage(self.model.images[self.model.getActiveImageIdx()])
+
+	def activeImageChanged(self, idx):
+		"""
+		To be invoked by the view whenever the active image is changed (for example, by selecting
+		a different tab in the notebook control)
+		"""
+		self.model.setActiveImage(idx)
+		self.view.updateControls(self.model.getActiveImageInfo())	# Update all of the slider controls for the newly active image

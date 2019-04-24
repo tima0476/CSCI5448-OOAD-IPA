@@ -208,33 +208,26 @@ class IPAView:
 		self.updateCanvasImage(imgInfo)
 		
 
-	# def onTabChanged(self, event):
-	# 	"""
-	# 	Event handler - called whenever the main Notebook's active tab selection changes.
-	# 	"""
-	# 	tabIdx = self.getCurrentTabID()
+	def onTabChanged(self, event):
+		"""
+		Event handler - called whenever the main Notebook's active tab selection changes.
+		"""
+		self.controller.activeImageChanged(self.getCurrentTabID())
 
-	# 	# Update the zoom slider to the current zoom for this tab
-	# 	self.zoomScale.set(self.currZoom[tabIdx])
-
-	# def getCurrentTabID(self):
-	# 	"""
-	# 	Return the zero-based index of the currently selected tab in the main Notebook widget
-	# 	"""
-	# 	return self.nb.index( self.nb.select() )
+	def getCurrentTabID(self):
+		"""
+		Return the zero-based index of the currently selected tab in the main Notebook widget
+		"""
+		return self.nb.index( self.nb.select() )
 	
+	def updateControls(self, imgInfo):
+		"""
+		Update the positions of all the sliders to match the currently active image
+		"""
+		self.zoomScale.set(imgInfo.currZoom * 100)
+
 	def dummy(self):
 		return
 
 	def start(self):
 		self.mainFrame.mainloop()
-
-	def onTabChanged(self, event):
-		"""
-		Event handler - called whenever the main Notebook's active tab selection changes.
-		"""
-		# tabIdx = self.getCurrentTabID()
-
-		# # Update the zoom slider to the current zoom for this tab
-		# self.zoomScale.set(self.currZoom[tabIdx])
-

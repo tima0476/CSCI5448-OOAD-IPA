@@ -21,7 +21,7 @@ class IPAModel:
 		return self.activeImage
 
 	def getActiveImageInfo(self):
-		return images[self.getActiveImageIdx()]
+		return self.images[self.getActiveImageIdx()]
 
 	def zoomActiveImage(self, factor):
 		self.images[self.getActiveImageIdx()].currZoom = factor
