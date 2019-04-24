@@ -8,12 +8,19 @@ import ImageVitals
 import IPAController
 
 class IPAView:
+	"""
+	Class IPAView:  The view portion of the IPA MVC implementation.  This class is responsible for presenting
+	the tkInter-based user interface for the IPA application.
+	"""
 
 	def __init__(self, controller, model):
+		# Constructor:  Save references to the M and C of the MVC
 		self.model = model
 		self.controller = controller
 
 	def CreateUI(self):
+		# Make all of the needed tkInter calls to bring up the main application window.
+
 		self.mainFrame = ttk.Frame(parent=None)
 		self.mainFrame.pack()
 		self.mainFrame.master.title("IPA: Image Processing Application")
@@ -114,6 +121,7 @@ class IPAView:
 	def onSaveButtonPress(self):
 		"""
 		Button handler:  Called when the Save... button is pressed
+		TODO:  Make me sing!
 		"""
 		return
 
@@ -124,7 +132,7 @@ class IPAView:
 		# Display a file chooser
 		filepath = filedialog.askopenfilename(title="Choose An Image to Open")
 
-		# Open the chosen file (if any)
+		# if the user chose a file and pressed "OK", then tell the controller
 		if filepath:
 			self.controller.openImage(filepath)
 
@@ -136,6 +144,7 @@ class IPAView:
 	def addImageTab(self, imgInfo):
 		"""
 		Add a tab to the notebook widget and display the passed-in image on it.
+		return: int index of the new tab
 		"""
 		frame = ttk.Frame(self.nb)
 		self.nb.add(frame, text=imgInfo.title, sticky='nesw')
@@ -149,6 +158,7 @@ class IPAView:
 		endIdx = self.nb.index("end") - 1
 		self.nb.select(endIdx)
 
+		# return the index of the new tab
 		return endIdx
 
 	def updateCanvasImage(self, imgInfo):
@@ -180,48 +190,22 @@ class IPAView:
 		"""
 		Event handler - the Zoom slider has moved. Scale the image on the current tab accordingly.
 		"""
-		# Get the active tab #.  Abort if no tabs
-		try:
-			tabIdx = self.getCurrentTabID()
-		except:
-			return
 
-		# # remember the new zoom for this image
-		# self.currZoom[tabIdx] = int(round(float(value)))
+		# Tell the controller to change the zoom of the active image
+		self.controller.zoomImage(float(value) / 100.0)
 
-		# # scale the image
-		# self.zoomImage(value)
+	def zoomImage(self, imgInfo):
+		# # Get the active tab #.  Abort if no tabs
+		# try:
+		# 	tabIdx = self.getCurrentTabID()
+		# except:
+		# 	return
 
-	# def zoomImage(self, value):
-	# 	# Get the active tab #.  Abort if no tabs
-	# 	try:
-	# 		tabIdx = self.getCurrentTabID()
-	# 	except:
-	# 		return
+		newSize = ( int(imgInfo.origSize[0]*imgInfo.currZoom), int(imgInfo.origSize[1]*imgInfo.currZoom) )
 
-	# 	newSize = ( int(self.origSizes[tabIdx][0]*float(value)/100.0), int(self.origSizes[tabIdx][1]*float(value)/100.0) )
-
-	# 	newImg = self.pilImages[tabIdx].resize(size=newSize, resample=Image.LANCZOS)
-	# 	newTkImg = PhotoImage(image=newImg)
-	# 	self.modTkImages[tabIdx] = newTkImg
-
-	# 	self.updateCanvasImage(self.imgCanvases[tabIdx], newTkImg)
-
-	# def onZoomMove(self, value):
-	# 	"""
-	# 	Event handler - the Zoom slider has moved. Scale the image on the current tab accordingly.
-	# 	"""
-	# 	# Get the active tab #.  Abort if no tabs
-	# 	try:
-	# 		tabIdx = self.getCurrentTabID()
-	# 	except:
-	# 		return
-
-	# 	# remember the new zoom for this image
-	# 	self.currZoom[tabIdx] = int(round(float(value)))
-
-	# 	# scale the image
-	# 	self.zoomImage(value)
+		imgInfo.modTkImage = PhotoImage(image=imgInfo.origImage.resize(size=newSize, resample=Image.LANCZOS))
+		
+		self.updateCanvasImage(imgInfo)
 		
 
 	# def onTabChanged(self, event):
