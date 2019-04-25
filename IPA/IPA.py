@@ -15,5 +15,4 @@ class IPA:
 		self.controller = IPAController.IPAController(self.model)
 		self.controller.start()
 
-
 ipa = IPA()			# This call doesn't return until the application terminates
