@@ -6,19 +6,18 @@ import ImageVitals
 class IPAModel:
 
 	def __init__(self):
-		self.images = []		# this list will hold instances of ImageVitals
+		self.images = []			# this list will hold instances of ImageVitals
+		self.observers = []			# this list will hold object references for observers.  Objects in this
+									# list must implement an UpdateImage(ImageVitals) method
 		self.activeImage = None
-		return
 
 	def addImage(self, imgInfo):
 		# Expects imgInfo is an ImageVitals object
 		self.images.append(imgInfo)
-		return
 
 	def setActiveImage(self, n):
 		if (n < len(self.images) and (n>=0)):
 			self.activeImage = n
-		return
 	
 	def getActiveImageIdx(self):
 		return self.activeImage
@@ -63,4 +62,15 @@ class IPAModel:
 		# Brightness
 		enhancer = pie.Brightness(img)
 		ii.modTkImage = PhotoImage(image=enhancer.enhance(ii.currBrightness))
+
+		self.notifyObservers()
+
+	def registerObserver(self, o):
+		self.observers.append(o)
+
+	def notifyObservers(self):
+		img = self.getActiveImageInfo()
+		for o in self.observers:
+			o.updateImage(img)
+
 

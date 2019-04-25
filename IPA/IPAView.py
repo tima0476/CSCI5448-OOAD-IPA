@@ -6,6 +6,7 @@ from PIL.ImageTk import PhotoImage
 import ScrolledCanvas
 import ImageVitals
 import IPAController
+import IPAModel
 
 class IPAView:
 	"""
@@ -13,9 +14,11 @@ class IPAView:
 	the tkInter-based user interface for the IPA application.
 	"""
 
-	def __init__(self, controller):
+	def __init__(self, model, controller):
 		# Constructor:  Save references to the M and C of the MVC
 		self.controller = controller
+		self.model = model
+		self.model.registerObserver(self)
 
 	def CreateUI(self):
 		# Make all of the needed tkInter calls to bring up the main application window.
@@ -146,7 +149,7 @@ class IPAView:
 		frame = ttk.Frame(self.nb)
 		self.nb.add(frame, text=imgInfo.title, sticky='nesw')
 		imgInfo.imgCanvas = ScrolledCanvas.ScrolledCanvas(frame)
-		self.updateCanvasImage(imgInfo)
+		self.updateImage(imgInfo)
 
 		# Now we have at least one image open.  Enable the Save... button
 		self.saveButton['state'] = 'normal'
@@ -158,7 +161,7 @@ class IPAView:
 		# return the index of the new tab
 		return endIdx
 
-	def updateCanvasImage(self, imgInfo):
+	def updateImage(self, imgInfo):
 		"""
 		Given an existing tkInter canvas object and a PIL.PhotoImage, replace the image in the canvas
 		"""

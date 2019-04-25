@@ -6,7 +6,7 @@ import ImageVitals
 class IPAController:
 	def __init__(self, model):
 		self.model = model
-		self.view = IPAView.IPAView(self)
+		self.view = IPAView.IPAView(model, self)
 
 	def start(self):
 		self.view.CreateUI()
@@ -53,7 +53,6 @@ class IPAController:
 			value = float value of the desired magnification (1.0 is original size)
 		"""
 		self.model.zoomActiveImage(value)
-		self.view.updateCanvasImage(self.model.getActiveImageInfo())
 
 	def adjustSaturation(self, value):
 		"""
@@ -62,7 +61,6 @@ class IPAController:
 			value = float value for amount of adjustment based on original image (1.0 is no adjustment)
 		"""
 		self.model.adjustActiveSaturation(value)
-		self.view.updateCanvasImage(self.model.getActiveImageInfo())
 
 	def adjustContrast(self, value):
 		"""
@@ -71,7 +69,6 @@ class IPAController:
 			value = float value for amount of adjustment based on original image (1.0 is no adjustment)
 		"""
 		self.model.adjustActiveContrast(value)
-		self.view.updateCanvasImage(self.model.getActiveImageInfo())
 
 	def adjustBrightness(self, value):
 		"""
@@ -80,4 +77,3 @@ class IPAController:
 			value = float value for amount of adjustment based on original image (1.0 is no adjustment)
 		"""
 		self.model.adjustActiveBrightness(value)
-		self.view.updateCanvasImage(self.model.getActiveImageInfo())
