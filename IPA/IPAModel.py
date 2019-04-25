@@ -1,3 +1,6 @@
+from PIL import Image
+from PIL.ImageTk import PhotoImage 
+import PIL.ImageEnhance as pie
 import ImageVitals
 
 class IPAModel:
@@ -25,12 +28,39 @@ class IPAModel:
 
 	def zoomActiveImage(self, value):
 		self.getActiveImageInfo().currZoom = value
+		self.applyAdjustments()
 
 	def adjustActiveSaturation(self, value):
 		self.getActiveImageInfo().currSaturation = value
+		self.applyAdjustments()
 
 	def adjustActiveContrast(self, value):
 		self.getActiveImageInfo().currContrast = value
+		self.applyAdjustments()
 
 	def adjustActiveBrightness(self, value):
 		self.getActiveImageInfo().currBrightness = value
+		self.applyAdjustments()
+
+	def applyAdjustments(self):
+		"""
+		Apply the current adjustement values to all 4 adjustments (zoom, saturation, contrast, brightness)
+		"""
+		ii = self.getActiveImageInfo()
+
+		# Zoom
+		newSize = ( int(ii.origSize[0]*ii.currZoom), int(ii.origSize[1]*ii.currZoom) )
+		img = ii.origImage.resize(size=newSize, resample=Image.LANCZOS)
+
+		# Saturation
+		enhancer = pie.Color(img)
+		img = enhancer.enhance(ii.currSaturation)
+
+		# Contrast
+		enhancer = pie.Contrast(img)
+		img = enhancer.enhance(ii.currContrast)
+
+		# Brightness
+		enhancer = pie.Brightness(img)
+		ii.modTkImage = PhotoImage(image=enhancer.enhance(ii.currBrightness))
+

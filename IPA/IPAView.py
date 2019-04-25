@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
-import PIL.ImageEnhance as pie
 import ScrolledCanvas
 import ImageVitals
 import IPAController
@@ -14,9 +13,8 @@ class IPAView:
 	the tkInter-based user interface for the IPA application.
 	"""
 
-	def __init__(self, controller, model):
+	def __init__(self, controller):
 		# Constructor:  Save references to the M and C of the MVC
-		self.model = model
 		self.controller = controller
 
 	def CreateUI(self):
@@ -237,32 +235,6 @@ class IPAView:
 		self.saturationScale.set(imgInfo.currSaturation)
 		self.contrastScale.set(imgInfo.currContrast)
 		self.brightnessScale.set(imgInfo.currBrightness)
-
-	def adjustImage(self, imgInfo):
-		"""
-		Apply the current adjustement values to all 4 adjustments (zoom, saturation, contrast, brightness)
-		"""
-
-		# Zoom
-		newSize = ( int(imgInfo.origSize[0]*imgInfo.currZoom), int(imgInfo.origSize[1]*imgInfo.currZoom) )
-		tmp = imgInfo.origImage.resize(size=newSize, resample=Image.LANCZOS)
-
-		# Saturation
-		enhancer = pie.Color(tmp)
-		tmp = enhancer.enhance(imgInfo.currSaturation)
-
-		# Contrast
-		enhancer = pie.Contrast(tmp)
-		tmp = enhancer.enhance(imgInfo.currContrast)
-
-		# Brightness
-		enhancer = pie.Brightness(tmp)
-		imgInfo.modTkImage = PhotoImage(image=enhancer.enhance(imgInfo.currBrightness))
-		
-		# display the result
-		self.updateCanvasImage(imgInfo)
-		return
-
 
 	def start(self):
 		self.mainFrame.mainloop()
