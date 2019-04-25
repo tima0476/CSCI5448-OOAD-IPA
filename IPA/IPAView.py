@@ -45,7 +45,7 @@ class IPAView:
 		# Use the remaining space in the bottom frame for the zoom slider (tk calls a slider a "Scale")
 		self.zoomScale = ttk.Scale(self.bottomFrame, command=self.onZoomMove, from_=0.01, to=5.00, value=1.00, orient=tk.HORIZONTAL)
 		self.zoomScale.pack(side=tk.RIGHT, fill='x', expand='true')
-		ttk.Label(self.bottomFrame, text='Zoom: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
+		ttk.Label(self.bottomFrame, text='Resize: ').pack(side=tk.LEFT)	# Add a label so the user knows what it is
 
 		#
 		# Add a panel on the right for the 'extras'
@@ -150,12 +150,10 @@ class IPAView:
 
 		options = {
 			'title'       		: "Save As...",
-			'defaultextension'	: ext[1:],			# string first character which will always be a .
 			'filetypes'   		: filetypes,
 			'initialfile' 		: base,
 			'initialdir'  		: path
 		}
-		print("Debug:",options)
 		
 		savepath = filedialog.asksaveasfilename(**options)
 		if savepath:
