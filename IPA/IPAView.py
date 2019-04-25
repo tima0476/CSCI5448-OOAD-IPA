@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
@@ -111,6 +112,9 @@ class IPAView:
 			# * Control-Tab: selects the tab following the currently selected one.
 			# * Shift-Control-Tab: selects the tab preceding the currently selected one.
 
+	def start(self):
+		self.mainFrame.mainloop()
+
 	def onCloseButtonPress(self):
 		"""
 		Button handler:  Called when the Close button is pressed
@@ -121,9 +125,50 @@ class IPAView:
 	def onSaveButtonPress(self):
 		"""
 		Button handler:  Called when the Save... button is pressed
-		TODO:  Make me sing!
 		"""
-		return
+
+		filetypes=[
+			("Bitmap", "*.bmp"),
+			("EPS", "*.eps"),
+			("GIF", "*.gif"),
+			("ICNS", "*.icns"),
+			("ICO", "*.ico"),
+			("IM", "*.im"),
+			("JPEG", "*.jpg"),
+			("JPEG 2000", "*.jp2"),
+			("MSP", "*.msp"),
+			("PCX", "*.pcx"),
+			("PNG", "*.png"),
+			("PPM", "*.ppm"),
+			("SGI", "*.sgi"),
+			("SPIDER", "*.spider"),
+			("TIFF", "*.tiff"),
+			("XBM", "*.xbm")
+		]
+		(path, file) = os.path.split(self.model.getActiveImageInfo().path)
+		(base, ext) = os.path.splitext(file)
+
+		options = {
+			'title'       		: "Save As...",
+			'defaultextension'	: ext[1:],			# string first character which will always be a .
+			'filetypes'   		: filetypes,
+			'initialfile' 		: base,
+			'initialdir'  		: path
+		}
+		print("Debug:",options)
+		
+		savepath = filedialog.asksaveasfilename(**options)
+		if savepath:
+			imgInfo = self.model.getActiveImageInfo()
+			imgInfo.modImage.save(savepath)
+
+			# Promote the modified image to "original" status
+			imgInfo.origImage = imgInfo.modImage
+			imgInfo.tkImage = imgInfo.modTkImage
+
+			# Update the notebook tab title to the new filename
+			currTabID = self.getCurrentTabID()
+			self.nb.tab(currTabID, text=os.path.split(savepath)[1])
 
 	def onOpenButtonPress(self):
 		"""
@@ -239,5 +284,3 @@ class IPAView:
 		self.contrastScale.set(imgInfo.currContrast)
 		self.brightnessScale.set(imgInfo.currBrightness)
 
-	def start(self):
-		self.mainFrame.mainloop()

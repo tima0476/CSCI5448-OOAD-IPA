@@ -49,19 +49,22 @@ class IPAModel:
 
 		# Zoom
 		newSize = ( int(ii.origSize[0]*ii.currZoom), int(ii.origSize[1]*ii.currZoom) )
-		img = ii.origImage.resize(size=newSize, resample=Image.LANCZOS)
+		ii.modImage = ii.origImage.resize(size=newSize, resample=Image.LANCZOS)
 
 		# Saturation
-		enhancer = pie.Color(img)
-		img = enhancer.enhance(ii.currSaturation)
+		enhancer = pie.Color(ii.modImage)
+		ii.modImage = enhancer.enhance(ii.currSaturation)
 
 		# Contrast
-		enhancer = pie.Contrast(img)
-		img = enhancer.enhance(ii.currContrast)
+		enhancer = pie.Contrast(ii.modImage)
+		ii.modImage = enhancer.enhance(ii.currContrast)
 
 		# Brightness
-		enhancer = pie.Brightness(img)
-		ii.modTkImage = PhotoImage(image=enhancer.enhance(ii.currBrightness))
+		enhancer = pie.Brightness(ii.modImage)
+		ii.modImage = enhancer.enhance(ii.currBrightness)
+
+		# Ready the final image for display
+		ii.modTkImage = PhotoImage(image=ii.modImage)
 
 		self.notifyObservers()
 

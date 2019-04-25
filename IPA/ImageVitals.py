@@ -4,6 +4,7 @@ class ImageVitals:
 	"""
 	def __init__(self):
 		self.origImage = None
+		self.modImage = None
 		self.tkImage = None
 		self.modTkImage = None
 		self.imgCanvas = None
@@ -13,3 +14,4 @@ class ImageVitals:
 		self.currContrast = 1.0
 		self.currBrightness = 1.0
 		self.title = ""
+		self.path = ""

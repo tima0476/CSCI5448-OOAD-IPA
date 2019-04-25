@@ -20,11 +20,14 @@ class IPAController:
 		"""
 
 		# Tell the view to open the image, and start creating the ImageVitals record for the model
+		# TODO - move this to the model
 		imgInfo = ImageVitals.ImageVitals()
 		(imgInfo.origImage, imgInfo.tkImage) = self.view.loadImage(filepath)
-		imgInfo.modTkImage = imgInfo.tkImage		# in the beginning, the image is unmodified
+		imgInfo.modImage = imgInfo.origImage		# in the beginning, the image is unmodified
+		imgInfo.modTkImage = imgInfo.tkImage
 		imgInfo.origSize = (imgInfo.tkImage.width(), imgInfo.tkImage.height())
 		imgInfo.currZoom = 1.0			# Start at 100% zoom
+		imgInfo.path = filepath
 
 
 		# Save the ImageVitals
@@ -36,7 +39,6 @@ class IPAController:
 		self.model.setActiveImage(idx)
 
 		self.view.updateControls(imgInfo)	# Update all of the slider controls for the newly active image
-
 
 	def activeImageChanged(self, idx):
 		"""
