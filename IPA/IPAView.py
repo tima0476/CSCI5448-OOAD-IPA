@@ -57,9 +57,9 @@ class IPAView:
 		# right-size the label images
 		rightScaleFrame = ttk.Frame(self.rightFrame)
 		rightScaleFrame.pack(side=tk.TOP)
-		self.saturationScale = ttk.Scale(rightScaleFrame, command=self.onSaturationMove, from_=0.0, to=10.0, value=1.00, orient=tk.VERTICAL)
-		self.contrastScale   = ttk.Scale(rightScaleFrame, command=self.onContrastMove,   from_=0.0, to=10.0, value=1.00, orient=tk.VERTICAL)
-		self.brightnessScale = ttk.Scale(rightScaleFrame, command=self.onBrightnessMove, from_=0.0, to=10.0, value=1.00, orient=tk.VERTICAL)
+		self.saturationScale = ttk.Scale(rightScaleFrame, command=self.onSaturationMove, from_=0.0, to=3.0, value=1.00, orient=tk.VERTICAL)
+		self.contrastScale   = ttk.Scale(rightScaleFrame, command=self.onContrastMove,   from_=0.0, to=3.0, value=1.00, orient=tk.VERTICAL)
+		self.brightnessScale = ttk.Scale(rightScaleFrame, command=self.onBrightnessMove, from_=0.0, to=3.0, value=1.00, orient=tk.VERTICAL)
 		self.saturationScale.pack(side=tk.RIGHT)
 		self.contrastScale.pack(side=tk.RIGHT)
 		self.brightnessScale.pack(side=tk.RIGHT)
