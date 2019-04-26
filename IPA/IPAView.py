@@ -1,3 +1,6 @@
+# This file implements the IPAView class, which is the view portion of the MVC pattern
+# author: Timothy Mason
+
 import os
 import tkinter as tk
 from tkinter import ttk
@@ -19,7 +22,7 @@ class IPAView:
 		# Constructor:  Save references to the M and C of the MVC, and register as an observer of the model.
 		self.controller = controller
 		self.model = model
-		self.model.registerObserver(self)
+		self.model.registerObserver(self)		# *** OBSERVER PATTERN ***
 
 	def CreateUI(self):
 		# Make all of the needed tkInter calls to bring up the main application window.

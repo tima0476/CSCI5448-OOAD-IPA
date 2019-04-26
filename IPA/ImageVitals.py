@@ -1,3 +1,6 @@
+# This file implements the ImageVitals class, which contains vital information to be stored about a single image.
+# author: Timothy Mason
+
 class ImageVitals:
 	"""
 	class ImagesVitals is a simple data container with named attributes for storing vital information about an image.

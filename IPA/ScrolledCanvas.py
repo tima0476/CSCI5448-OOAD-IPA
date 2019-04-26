@@ -1,10 +1,14 @@
+# This file implements the ScrolledCanvas class, which is a subclass of the Tkinter Canvas object; adding 
+# the capability to automatically display working scrollbars if the canvas "virtual size" is larger
+# than its' display size.
+#
+# author:   Adapted from example code in "Learning Python, 4th ed." by Mark Lutz
 import tkinter as tk
 from tkinter import ttk
 
 class ScrolledCanvas(tk.Canvas):
     """
     Make a specialized tkinter canvas object that automatically makes scroll bars for itself.
-    Adapted from example code in "Learning Python, 4th ed." by Mark Lutz
     """
     def __init__(self, container):
         tk.Canvas.__init__(self, container)

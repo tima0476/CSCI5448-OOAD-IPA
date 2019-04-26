@@ -1,3 +1,6 @@
+# This file implements the IPAModel class, which is the model portion of the MVC pattern
+# author: Timothy Mason
+
 from PIL import Image
 from PIL.ImageTk import PhotoImage 
 import PIL.ImageEnhance as pie
@@ -13,7 +16,7 @@ class IPAModel:
 		"""
 		self.images = []			# this list will hold instances of ImageVitals
 		self.observers = []			# this list will hold object references for observers.  Objects in this
-									# list must implement an UpdateImage(ImageVitals) method
+									# list must implement an UpdateImage(ImageVitals) method  *** OBSERVER PATTERN ***
 		self.activeImage = None
 
 	def addImage(self, imgInfo):
@@ -119,7 +122,7 @@ class IPAModel:
 
 	def registerObserver(self, o):
 		"""
-		register an observer which will receive notifications whenever the active image is updated.
+		register an observer which will receive notifications whenever the active image is updated.   *** OBSERVER PATTERN ***
 
 		Paramters:
 			o:  Object reference.  The object referenced must implement the updateImage(ImageVitals) method
@@ -128,7 +131,7 @@ class IPAModel:
 
 	def notifyObservers(self):
 		"""
-		iterate through the registered observers and notify each that the active image has been updated.
+		iterate through the registered observers and notify each that the active image has been updated.   *** OBSERVER PATTERN ***
 		"""
 		img = self.getActiveImageInfo()
 		for o in self.observers:

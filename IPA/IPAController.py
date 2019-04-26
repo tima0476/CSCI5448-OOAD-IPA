@@ -1,3 +1,6 @@
+# This file implements the IPAController class, which is the "Creamy Controller" of the MVC pattern.
+# author: Timothy Mason
+
 import os
 import IPAModel
 import IPAView

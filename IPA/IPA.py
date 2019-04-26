@@ -1,3 +1,6 @@
+# This file implements the IPA class, which is the entry point of the application
+# author: Timothy Mason
+
 import os
 import IPAController
 import IPAModel
