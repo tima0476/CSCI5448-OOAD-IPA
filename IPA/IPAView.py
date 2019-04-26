@@ -16,7 +16,7 @@ class IPAView:
 	"""
 
 	def __init__(self, model, controller):
-		# Constructor:  Save references to the M and C of the MVC
+		# Constructor:  Save references to the M and C of the MVC, and register as an observer of the model.
 		self.controller = controller
 		self.model = model
 		self.model.registerObserver(self)
@@ -73,10 +73,6 @@ class IPAView:
 
 		# Hack alert!  Tkinter doesn't support rotated text in labels, so load
 		# images of the rotated text and scale to fit the sliders
-		# tempImg = Image.open('rotTint.png')
-		# scale = float(sliderWidth)/float(tempImg.width)
-		# self.imgTintLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
-
 		tempImg = Image.open('rotSaturation.png')
 		scale = float(sliderWidth)/float(tempImg.width)
 		self.imgSaturationLabel = PhotoImage(image=tempImg.resize(size=(int(round(tempImg.width*scale)), int(round(tempImg.height*scale)))))
@@ -113,13 +109,16 @@ class IPAView:
 			# * Shift-Control-Tab: selects the tab preceding the currently selected one.
 
 	def start(self):
+		"""
+		begin execution of the main event loop.  This method does not return until the application terminates.
+		"""
 		self.mainFrame.mainloop()
 
 	def onCloseButtonPress(self):
 		"""
 		Button handler:  Called when the Close button is pressed
 		"""
-		# To Do - offer to save all unsaved edits
+		# To Do - offer to save all unsaved edits / warn of quitting with unsaved edits.
 		self.mainFrame.quit()
 
 	def onSaveButtonPress(self):
@@ -127,6 +126,8 @@ class IPAView:
 		Button handler:  Called when the Save... button is pressed
 		"""
 
+		# code smell:  Should some or all of this be moved to the model?  Not clear how to do that
+		# since much of this is GUI-library-specific
 		filetypes=[
 			("Bitmap", "*.bmp"),
 			("EPS", "*.eps"),
@@ -158,6 +159,8 @@ class IPAView:
 		savepath = filedialog.asksaveasfilename(**options)
 		if savepath:
 			imgInfo = self.model.getActiveImageInfo()
+
+			# rely on the Pillow Image.save() to automatically configure the image type based on the filename extension.
 			imgInfo.modImage.save(savepath)
 
 			# Promote the modified image to "original" status
@@ -180,6 +183,16 @@ class IPAView:
 			self.controller.openImage(filepath)
 
 	def loadImage(self, filepath):
+		"""
+		Load an image file using Pillow.  Assumes the specified file exists and is an image of a 
+		supported filetype.
+
+		Paramters:
+			filepath:  string with the fully qualified os path of the image file to be loaded.
+
+		Returns:
+			(Pillow image, Tkinter image):  2-tuple with the pillow image object and the Tkinter-compatible image.
+		"""
 		pilImage = Image.open(filepath)
 		tkImage = PhotoImage(image=pilImage)
 		return (pilImage, tkImage)
@@ -188,6 +201,9 @@ class IPAView:
 		"""
 		Add a tab to the notebook widget and display the passed-in image on it.
 		return: int index of the new tab
+
+		Paramter:
+			imgInfo:  ImageVitals reference for the image to show on the new tab
 		"""
 		frame = ttk.Frame(self.nb)
 		self.nb.add(frame, text=imgInfo.title, sticky='nesw')
@@ -207,6 +223,9 @@ class IPAView:
 	def updateImage(self, imgInfo):
 		"""
 		Given an existing tkInter canvas object and a PIL.PhotoImage, replace the image in the canvas
+
+		Parameters:
+			imgInfo: Tkinter image object to display on the current tab.
 		"""
 
 		# compute a maximum size based on the display size, accounting for other UI elements
@@ -227,11 +246,16 @@ class IPAView:
 		# (only call create_image on the first round, and itemconfig on subsequent
 		# updates.  Need to persist the object returned from the first
 		# create_image() call)
+		# This should fix the display bug where an original-size image is left behind
+		# the current image (it's visible if the image has been reduced in size)
 
 
 	def onZoomMove(self, value):
 		"""
 		Event handler - the Zoom slider has moved. Scale the image on the current tab accordingly.
+
+		Parameters:
+			value:  string with a floating point representation of the new slider setting
 		"""
 
 		# Tell the controller to change the zoom of the active image
@@ -240,6 +264,9 @@ class IPAView:
 	def onBrightnessMove(self, value):
 		"""
 		Event handler - the Brightness slider has moved. Adjust the image on the current tab accordingly.
+
+		Parameters:
+			value:  string with a floating point representation of the new slider setting
 		"""
 
 		# Tell the controller to change the brightness of the active image
@@ -248,6 +275,9 @@ class IPAView:
 	def onContrastMove(self, value):
 		"""
 		Event handler - the Contrast slider has moved. Adjust the image on the current tab accordingly.
+
+		Parameters:
+			value:  string with a floating point representation of the new slider setting
 		"""
 
 		# Tell the controller to change the contrast of the active image
@@ -255,7 +285,10 @@ class IPAView:
 
 	def onSaturationMove(self, value):
 		"""
-		Event handler - the Zoom slider has moved. Adjust the image on the current tab accordingly.
+		Event handler - the Saturation slider has moved. Adjust the image on the current tab accordingly.
+
+		Parameters:
+			value:  string with a floating point representation of the new slider setting
 		"""
 
 		# Tell the controller to change the saturation of the active image
@@ -264,18 +297,27 @@ class IPAView:
 	def onTabChanged(self, event):
 		"""
 		Event handler - called whenever the main Notebook's active tab selection changes.
+
+		Paramters:
+			event:  a Tkinter event object.  Not used by this implementation.
 		"""
 		self.controller.activeImageChanged(self.getCurrentTabID())
 
 	def getCurrentTabID(self):
 		"""
 		Return the zero-based index of the currently selected tab in the main Notebook widget
+
+		Returns:
+			int index of the currently selected tab.
 		"""
 		return self.nb.index( self.nb.select() )
 	
 	def updateControls(self, imgInfo):
 		"""
 		Update the positions of all the sliders to match the currently active image
+
+		Parameters:
+			imgInfo: ImageVitals reference for the image to be represented by the sliders.
 		"""
 		self.zoomScale.set(imgInfo.currZoom)
 		self.saturationScale.set(imgInfo.currSaturation)

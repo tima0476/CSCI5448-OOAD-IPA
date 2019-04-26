@@ -3,8 +3,8 @@ from tkinter import ttk
 
 class ScrolledCanvas(tk.Canvas):
     """
-    Make a specialized tkinter canvas object that automatically makes scroll bars for itself.  Concept
-    adapted from "Learning Python, 4th ed." by Mark Lutz
+    Make a specialized tkinter canvas object that automatically makes scroll bars for itself.
+    Adapted from example code in "Learning Python, 4th ed." by Mark Lutz
     """
     def __init__(self, container):
         tk.Canvas.__init__(self, container)

@@ -1,10 +1,6 @@
-#!/usr/bin/env python3
-
 import os
 import IPAController
 import IPAModel
-import IPAView
-
 
 class IPA:
 	"""
@@ -15,4 +11,5 @@ class IPA:
 		self.controller = IPAController.IPAController(self.model)
 		self.controller.start()
 
-ipa = IPA()			# This call doesn't return until the application terminates
+if __name__ == '__main__':
+	IPA()			# This call doesn't return until the application terminates
